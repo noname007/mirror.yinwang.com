@@ -1,0 +1,18 @@
+env:
+  global:
+    - secure: Hn8K/UI4XYpZXhKqQv6Ee37aPYiLP/2kpyPdOnTqQ7O+m+78T7rdcdCCB/Flu7yDt4udGJ7nFK+t0WaoqUVYHfrfVFoIEfnmGaQUhs8It2kNQGRtlKaIt5fMGnQnTpgFdPG65XZkCxxhXwkVn33gwto562A0vVLhpJPZqsli+c5md5gqPy9hAyRfI0zZQp6AKHo1LC8KdiP0sWKrjaa1EFJUJNkABH4ALuU6s0yZ3V0eUYmWEGtx5XzdKrDLJSkLGTTkXj5yZfRgVNnCpz95AiUKGrh4l2rY0PNJV3sFN1Wtm+D31MrRnNLO6K6eXuVK+uqCkWwHyh5cRaG9UvvVVH18vJaoVr0T0JJiJJavPXlPWBtEiJlMsC0AxOw6ug7eCI1vlR9yP5qfoKbXUtNFbL1Gk9aV2WNvmz7qYWvS51RGNfIDiyvvq8YWnt6BlyTodWbXc2KsWeGyggiRCGfRFiPp9t6CvVgGAXaX2S25KqevGdsOzeKnBNnqSeXnTBxVSDukn4wJHcwEKDZki2SfgdCnXIolvLpnJZVykC1xI1jWvLSQ8tgw+3RLp99Yjd96g8sq0Hg/eKwMvWnIisjW/gV9rnwO/D4SpqApepZqLVYDtJuQinnZIV85na6Y9chA8eMr6/Y988O3UeVqS+7FNPeqzaVBGrZCIoh8+fk3k/o=
+    - GH_REF:github.com/noname007/mirror.yinwang.com
+
+- git config --global user.name "Travis Bot"
+- git config --global user.email "autobuild@Travis Bot"
+
+script:
+- wget -k -c -np -r -p http://www.yinwang.org
+
+after_script:
+- cp -rf  www.yinwang.org/* .
+- rm -rf  www.yinwang.org
+- git add --all
+- git commit -m":`date`:Updated By Travis"
+- git push -f "https://${GH_TOKEN}@${GH_REF}" master:master
+
